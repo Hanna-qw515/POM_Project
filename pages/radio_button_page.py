@@ -9,6 +9,7 @@ class RadioButtonPage(BasePage):
     YES_LABEL_INPUT = (By.XPATH, "//label[@for='yesRadio']")
     IMPRESSIVE_LABEL_INPUT = (By.XPATH, "//label[@for='impressiveRadio']")
     TEXT_SUCCESS = (By.XPATH, "//span[@class='text-success']")
+    ELEMENTS_TEXT_BUTTON = (By.CLASS_NAME, "form-check-label")
 
     def open_page(self):
         self.open(self.URL)
@@ -29,3 +30,10 @@ class RadioButtonPage(BasePage):
     def is_no_enabled(self):
         disabled_no = self.find(self.NO_INPUT)
         return disabled_no.is_enabled()
+
+    def list_elements_buttons(self):
+        return self.get_elements_text(self.ELEMENTS_TEXT_BUTTON)
+
+    def title_page(self):
+        return self.get_title()
+

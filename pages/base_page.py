@@ -39,7 +39,7 @@ class BasePage:
         try:
             element.click()
         except ElementClickInterceptedException:
-            self.driver.execute_script("arguments[0].click();", element)
+            self.driver.execute_script("arguments[0].click();",element)
 
     def has_class(self, locator, class_name, timeout=3):
         # Ждём, пока в атрибуте class появится нужное значение (например, "field-error")
@@ -50,3 +50,26 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def wait_clickable(self,locator):
+        return self.wait.until(EC.element_to_be_clickable(locator))
+
+    def is_visible(self, locator, timeout=3):
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.visibility_of_element_located(locator)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def get_title(self):
+        return self.driver.title
+
+    def wait_url_contains(self,part):
+        return self.wait.until(EC.url_contains(part))
+
+    def get_elements_text(self,locator):
+        list_element = self.wait.until(EC.presence_of_all_elements_located(locator))
+        return [element.text for element in list_element]
+

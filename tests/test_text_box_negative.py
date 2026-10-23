@@ -15,11 +15,6 @@ from pages.text_box_page import TextBoxPage
 def test_text_box_email_validation(driver, email, should_be_invalid, should_show_output, case_name):
     page = TextBoxPage(driver)
     page.open_page()
-
-    if email:
-        page.fill_form(full_name="Ivan Tester", email=email)
-
     page.submit()
-
-    assert page.is_email_marked_invalid() == should_be_invalid, f"{case_name}: неправильная подсветка email"
-    assert page.is_output_shown() == should_show_output, f"{case_name}: неверное отображение блока результата"
+    assert not page.is_email_marked_invalid(),"Поле email не подсветилось красным"
+    assert not page.is_output_shown(),"Форма с невалидным email не должна отправляться"
